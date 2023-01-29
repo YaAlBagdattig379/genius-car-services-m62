@@ -5,12 +5,18 @@ import auth from '../../../firebase.init';
 import googleLogo from '../../../images/SocialLogin/GoogleLogo.png';
 import facebookLogo from '../../../images/SocialLogin/facebook.png';
 import gitHubLogo from '../../../images/SocialLogin/gitHub.png';
+import Loading from '../../Shared/Loading/Loading';
 
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
     const navigate = useNavigate();
-  let errorElement;
+    let errorElement;
+    useEffect(()=>{
+    if(loading){
+      return <Loading></Loading>
+    }
+   },[])
     if (error || error1) {
         errorElement =<p className='text-danger'>Error...{error?.message}{error1?.message}</p>
       }
@@ -20,7 +26,7 @@ const SocialLogin = () => {
           navigate('/home')
         );
       }
-    })
+    },[])
     return (
         <div>
             <div className='d-flex align-items-center'>
