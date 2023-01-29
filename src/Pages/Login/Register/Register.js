@@ -38,9 +38,11 @@ const Register = () => {
                 <input type="text" name="name"required placeholder='Your Name' id="" />
                 <input type="email"name="email" required placeholder='Email Address' id="" />
                 <input type="Password"name="password" required placeholder='Password' id="" />
-                <input type="submit"value={'Register'}></input>
+                <input type="checkbox" name="terms" id=""required />
+                 <label htmlFor="accepts terms">Accept terms and conditions of Genius Car</label>
+                <input className='w-50 mx-auto d-block btn btn-primary mt-2' type="submit"value={'Register'}></input>
             </form>
-            <p>Already have an account? <Link to={'/login'} onClick={navigateToLogin}  className='text-danger pe-auto text-decoration-none '>Please Login</Link></p>
+            <p>Already have an account? <Link to={'/login'} onClick={navigateToLogin}  className='text-primary pe-auto text-decoration-none '>Please Login</Link></p>
             <SocialLogin></SocialLogin>
         </div>
     );

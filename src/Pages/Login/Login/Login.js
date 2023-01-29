@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {Form ,Button} from 'react-bootstrap';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import SocialLogin from '../SocialLogin/SocialLogin';
@@ -10,6 +10,7 @@ const Login = () => {
     const passwordRef = useRef('');
     const navigate = useNavigate();
     const location = useLocation(auth);
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
     const from = location.state?.from?.pathname || '/';
     let errorElement;
     const [
@@ -32,11 +33,12 @@ const Login = () => {
     const navigateRegistered = event =>{
        navigate('/register')
     }
+    const resetPassword =async()=>{
+      const email = emailRef.current.value;
+      await sendPasswordResetEmail(email);
+    }
     if (error) {
-      errorElement =
-        <div>
-          <p className='text-danger'>Error: {error?.message}</p>
-        </div>
+      errorElement =<p className='text-danger'>Error...{error?.message}</p>
     }
     return (
         <div className='container w-50 mx-auto'>
@@ -48,16 +50,16 @@ const Login = () => {
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Control ref={passwordRef} type="password" required placeholder="Password" />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" required label="Check me out" />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-              Submit
+          <Button variant="primary"className='mx-auto w-50 d-block mb-2' type="submit">
+              Login
           </Button>
         </Form>
         {errorElement}
         <small>
-           <p  className='mt-2'>New to Genius car? <Link to={'/register'} onClick={navigateRegistered}  className='text-danger pe-auto text-decoration-none '>Please register</Link></p>
+           <p  className='mt-2'>New to Genius car? <Link to={'/register'} onClick={navigateRegistered}  className='text-primary pe-auto text-decoration-none '>Please register</Link></p>
+        </small>
+        <small>
+           <p  className='mt-2'>Forget Password ? <Link to={'/register'} onClick={resetPassword}  className='text-primary pe-auto text-decoration-none '>Reset Password</Link></p>
         </small>
         <SocialLogin></SocialLogin>
     </div>
