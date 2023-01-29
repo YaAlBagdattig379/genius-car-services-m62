@@ -11,6 +11,7 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation(auth);
     const from = location.state?.from?.pathname || '/';
+    let errorElement;
     const [
       signInWithEmailAndPassword,
       user,
@@ -31,6 +32,12 @@ const Login = () => {
     const navigateRegistered = event =>{
        navigate('/register')
     }
+    if (error) {
+      errorElement =
+        <div>
+          <p className='text-danger'>Error: {error?.message}</p>
+        </div>
+    }
     return (
         <div className='container w-50 mx-auto'>
             <h2 className='text-primary text-center mt-2'>Please Login</h2>
@@ -48,6 +55,7 @@ const Login = () => {
               Submit
           </Button>
         </Form>
+        {errorElement}
         <small>
            <p  className='mt-2'>New to Genius car? <Link to={'/register'} onClick={navigateRegistered}  className='text-danger pe-auto text-decoration-none '>Please register</Link></p>
         </small>

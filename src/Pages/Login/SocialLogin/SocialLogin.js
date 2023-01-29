@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useNavigate} from 'react-router-dom';
 import auth from '../../../firebase.init';
 import googleLogo from '../../../images/SocialLogin/GoogleLogo.png';
@@ -8,16 +8,17 @@ import gitHubLogo from '../../../images/SocialLogin/gitHub.png';
 
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
     const navigate = useNavigate();
     let errorElement;
-    if (error) {
+    if (error || error1) {
         errorElement =
           <div>
-            <p className='text-danger'>Error: {error.message}</p>
+            <p className='text-danger'>Error: {error?.message}{error1?.message}</p>
           </div>
       }
     useEffect(()=>{
-      if (user) {
+      if (user || user1) {
         return (
           navigate('/home')
         );
@@ -25,7 +26,6 @@ const SocialLogin = () => {
     })
     return (
         <div>
-            {errorElement}
             <div className='d-flex align-items-center'>
                <div className='w-50 bg-primary'style={{height:'1px'}}>
                </div>
@@ -33,6 +33,7 @@ const SocialLogin = () => {
                <div className='w-50 bg-primary'style={{height:'1px'}}>
                </div>
             </div>
+            {errorElement}
             <div className=''>
               <button onClick={()=>signInWithGoogle()}
               className='btn bg-info w-50 d-block mx-auto my-2'>  
@@ -43,7 +44,8 @@ const SocialLogin = () => {
               <img style={{width:'14%'}} src={facebookLogo} alt="" />
                <span className='px-3'>Facebook Sign In</span>
               </button>
-              <button className='btn bg-info w-50 d-block mx-auto my-2'>  
+              <button onClick={()=>signInWithGithub()} 
+              className='btn bg-info w-50 d-block mx-auto my-2'>  
               <img style={{width:'14%',borderRadius:'15px'}} src={gitHubLogo} alt="" />
                <span className='px-3'>GitHub Sign In</span>
               </button>
