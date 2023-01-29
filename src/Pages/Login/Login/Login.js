@@ -48,7 +48,9 @@ const Login = () => {
               Submit
           </Button>
         </Form>
-        <p>New to Genius car? <Link to={'/register'} onClick={navigateRegistered}  className='text-danger pe-auto text-decoration-none '>Please register</Link></p>
+        <small>
+           <p  className='mt-2'>New to Genius car? <Link to={'/register'} onClick={navigateRegistered}  className='text-danger pe-auto text-decoration-none '>Please register</Link></p>
+        </small>
         <SocialLogin></SocialLogin>
     </div>
     
