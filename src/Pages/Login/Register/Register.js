@@ -5,6 +5,7 @@ import { Link,useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import Loading from '../../Shared/Loading/Loading';
+import PageTitle from '../../Shared/PageTitle/PageTitle';
 
 const Register = () => {
     const [agree,setAgree] = useState(false);
@@ -45,6 +46,7 @@ const Register = () => {
     }
     return (
         <div className='form-register'>
+            <PageTitle title={'Register'}></PageTitle>
             <h3 className='text-center'>Please Register</h3>
             <form onSubmit={handleRegister}>
                 <input type="text" name="name"required placeholder='Your Name' id="" />
